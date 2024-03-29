@@ -15,14 +15,14 @@ Ce projet est une application web développée avec Node.js et Express. Elle uti
 3. Créez un fichier `.env` à la racine du projet et ajoutez les configurations nécessaires :
 
    ```plaintext
-   PORT=3000
+   PORT=8080
    MONGODB_URI=mongodb://localhost:27017/material
 
 4. Lancez l'application en mode développement :
    ```bash
    npm start
 
-5. Accédez à l'application dans votre navigateur à l'adresse http://localhost:3000.
+5. Accédez à l'application dans votre navigateur à l'adresse http://localhost:8080.
 
 ## Fonctionnalités
 
