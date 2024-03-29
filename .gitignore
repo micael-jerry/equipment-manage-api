@@ -7,3 +7,4 @@ npm-debug.log86
 
 # Ignore .env file
 .env
+.vercel

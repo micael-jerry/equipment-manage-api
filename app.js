@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const routes = require('./routes/routes');
+const routes = require('./routes/index');
 require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB_URI, {
