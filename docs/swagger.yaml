@@ -12,15 +12,15 @@ paths:
         - user
       summary: Récupérer la liste des users
       responses:
-        '200':
+        "200":
           description: Liste des utilisateurs récupérée avec succès
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/userOutput'
-        '500':
+                  $ref: "#/components/schemas/userOutput"
+        "500":
           description: Erreur lors de la récupération des utilisateurs
 
     post:
@@ -32,19 +32,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userInput'
+              $ref: "#/components/schemas/userInput"
       responses:
-        '201':
+        "201":
           description: Utilisateur ajouté avec succès
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/userOutput'
-        '400':
+                  $ref: "#/components/schemas/userOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de l'utilisateur
 
   /user/{id}:
@@ -60,17 +60,17 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Utilisateur récupéré avec succès
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/userOutput'
-        '404':
+                  $ref: "#/components/schemas/userOutput"
+        "404":
           description: Utilisateur non trouvé
-        '500':
+        "500":
           description: Erreur lors de la récupération de l'utilisateur
 
     put:
@@ -89,21 +89,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userInput'
+              $ref: "#/components/schemas/userInput"
       responses:
-        '200':
+        "200":
           description: Utilisateur mis à jour avec succès
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/userOutput'
-        '400':
+                  $ref: "#/components/schemas/userOutput"
+        "400":
           description: Erreur de validation
-        '404':
+        "404":
           description: Utilisateur non trouvé
-        '500':
+        "500":
           description: Erreur lors de la mise à jour de l'utilisateur
 
     delete:
@@ -118,11 +118,11 @@ paths:
           schema:
             type: integer
       responses:
-        '204':
+        "204":
           description: Utilisateur supprimé avec succès
-        '404':
+        "404":
           description: Utilisateur non trouvé
-        '500':
+        "500":
           description: Erreur lors de la suppression de l'utilisateur
 
   /equipements:
@@ -131,13 +131,13 @@ paths:
         - equipements
       summary: Récupérer la liste des équipements
       responses:
-        '200':
+        "200":
           description: Liste des équipements récupérée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EquipementOutput'
-        '500':
+                $ref: "#/components/schemas/EquipementOutput"
+        "500":
           description: Erreur lors de la récupération des équipements
 
     post:
@@ -149,17 +149,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EquipementInput'
+              $ref: "#/components/schemas/EquipementInput"
       responses:
-        '201':
+        "201":
           description: Equipement ajouté avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EquipementOutput'
-        '400':
+                $ref: "#/components/schemas/EquipementOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de l'équipement
 
   /equipements/{id}:
@@ -175,15 +175,15 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Equipement récupéré avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EquipementOutput'
-        '404':
+                $ref: "#/components/schemas/EquipementOutput"
+        "404":
           description: Equipement non trouvé
-        '500':
+        "500":
           description: Erreur lors de la récupération de l'équipement
 
     put:
@@ -202,19 +202,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EquipementInput'
+              $ref: "#/components/schemas/EquipementInput"
       responses:
-        '200':
+        "200":
           description: Equipement mis à jour avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EquipementOutput'
-        '400':
+                $ref: "#/components/schemas/EquipementOutput"
+        "400":
           description: Erreur de validation
-        '404':
+        "404":
           description: Equipement non trouvé
-        '500':
+        "500":
           description: Erreur lors de la mise à jour de l'équipement
 
     delete:
@@ -229,26 +229,49 @@ paths:
           schema:
             type: integer
       responses:
-        '204':
+        "204":
           description: Equipement supprimé avec succès
-        '404':
+        "404":
           description: Equipement non trouvé
-        '500':
+        "500":
           description: Erreur lors de la suppression de l'équipement
-
+  /equipements/{id}/type:
+    get:
+      tags:
+        - equipements
+      summary: Récupérer le type d'un équipement par ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de l'équipement
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Type de l'équipement récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  status_equipement:
+                    type: string
   /stocks:
     get:
       tags:
         - stocks
       summary: Récupérer la liste des stocks
       responses:
-        '200':
+        "200":
           description: Liste des stocks récupérée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockOutput'
-        '500':
+                $ref: "#/components/schemas/StockOutput"
+        "500":
           description: Erreur lors de la récupération des stocks
 
     post:
@@ -260,17 +283,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StockInput'
+              $ref: "#/components/schemas/StockInput"
       responses:
-        '201':
+        "201":
           description: Élément ajouté au stock avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockOutput'
-        '400':
+                $ref: "#/components/schemas/StockOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de l'élément au stock
 
   /stocks/{id}:
@@ -286,15 +309,15 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Élément du stock récupéré avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockOutput'
-        '404':
+                $ref: "#/components/schemas/StockOutput"
+        "404":
           description: Élément du stock non trouvé
-        '500':
+        "500":
           description: Erreur lors de la récupération de l'élément du stock
 
     put:
@@ -313,19 +336,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StockInput'
+              $ref: "#/components/schemas/StockInput"
       responses:
-        '200':
+        "200":
           description: Élément du stock mis à jour avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockOutput'
-        '400':
+                $ref: "#/components/schemas/StockOutput"
+        "400":
           description: Erreur de validation
-        '404':
+        "404":
           description: Élément du stock non trouvé
-        '500':
+        "500":
           description: Erreur lors de la mise à jour de l'élément du stock
 
     delete:
@@ -340,11 +363,11 @@ paths:
           schema:
             type: integer
       responses:
-        '204':
+        "204":
           description: Élément du stock supprimé avec succès
-        '404':
+        "404":
           description: Élément du stock non trouvé
-        '500':
+        "500":
           description: Erreur lors de la suppression de l'élément du stock
 
   /commandes:
@@ -353,13 +376,13 @@ paths:
         - commandes
       summary: Récupérer la liste des commandes
       responses:
-        '200':
+        "200":
           description: Liste des commandes récupérée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommandeOutput'
-        '500':
+                $ref: "#/components/schemas/CommandeOutput"
+        "500":
           description: Erreur lors de la récupération des commandes
 
     post:
@@ -371,17 +394,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommandeInput'
+              $ref: "#/components/schemas/CommandeInput"
       responses:
-        '201':
+        "201":
           description: Commande ajoutée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommandeOutput'
-        '400':
+                $ref: "#/components/schemas/CommandeOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de la commande
 
   /commandes/{id}:
@@ -397,15 +420,15 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: Commande récupérée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommandeOutput'
-        '404':
+                $ref: "#/components/schemas/CommandeOutput"
+        "404":
           description: Commande non trouvée
-        '500':
+        "500":
           description: Erreur lors de la récupération de la commande
 
     put:
@@ -424,19 +447,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommandeInput'
+              $ref: "#/components/schemas/CommandeInput"
       responses:
-        '200':
+        "200":
           description: Commande mise à jour avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommandeOutput'
-        '400':
+                $ref: "#/components/schemas/CommandeOutput"
+        "400":
           description: Erreur de validation
-        '404':
+        "404":
           description: Commande non trouvée
-        '500':
+        "500":
           description: Erreur lors de la mise à jour de la commande
 
     delete:
@@ -451,66 +474,26 @@ paths:
           schema:
             type: integer
       responses:
-        '204':
+        "204":
           description: Commande supprimée avec succès
-        '404':
+        "404":
           description: Commande non trouvée
-        '500':
+        "500":
           description: Erreur lors de la suppression de la commande
 
-##  /commandes/{id_commande}/lignes-commande:
-##    get:
-##      tags:
-##        - commandes
-##      summary: Récupérer les lignes de commande d'une commande
-##      parameters:
-##        - name: id_commande
-##          in: path
-##          description: ID de la commande
-##          required: true
-##          schema:
-##            type: integer
-##      responses:
-##        '200':
-##          description: Liste des lignes de commande récupérée avec succès
-##        '404':
-##          description: Commande non trouvée
-##        '500':
-##          description: Erreur lors de la récupération des lignes de commande
-##
-##  /lignes-commande/{id}:
-##    get:
-##      tags:
-##        - commandes
-##      summary: Récupérer une ligne de commande par ID
-##      parameters:
-##        - name: id
-##          in: path
-##          description: ID de la ligne de commande à récupérer
-##          required: true
-##          schema:
-##            type: integer
-##      responses:
-##        '200':
-##          description: Ligne de commande récupérée avec succès
-##        '404':
-##          description: Ligne de commande non trouvée
-##        '500':
-##          description: Erreur lors de la récupération de la ligne de commande
-##
   /historique-utilisation:
     get:
       tags:
         - historique
       summary: Récupérer l'historique d'utilisation
       responses:
-        '200':
+        "200":
           description: Historique d'utilisation récupéré avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HistoriqueUtilisationOutput'
-        '500':
+                $ref: "#/components/schemas/HistoriqueUtilisationOutput"
+        "500":
           description: Erreur lors de la récupération de l'historique d'utilisation
 
     post:
@@ -522,17 +505,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HistoriqueUtilisationInput'
+              $ref: "#/components/schemas/HistoriqueUtilisationInput"
       responses:
-        '201':
+        "201":
           description: Entrée ajoutée à l'historique d'utilisation avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HistoriqueUtilisationOutput'
-        '400':
+                $ref: "#/components/schemas/HistoriqueUtilisationOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de l'entrée à l'historique d'utilisation
 
   /maintenance:
@@ -541,13 +524,13 @@ paths:
         - maintenance
       summary: Récupérer la liste des opérations de maintenance
       responses:
-        '200':
+        "200":
           description: Liste des opérations de maintenance récupérée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MaintenanceOutput'
-        '500':
+                $ref: "#/components/schemas/MaintenanceOutput"
+        "500":
           description: Erreur lors de la récupération des opérations de maintenance
 
     post:
@@ -559,19 +542,116 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MaintenanceInput'
+              $ref: "#/components/schemas/MaintenanceInput"
       responses:
-        '201':
+        "201":
           description: Opération de maintenance ajoutée avec succès
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MaintenanceOutput'
-        '400':
+                $ref: "#/components/schemas/MaintenanceOutput"
+        "400":
           description: Erreur de validation
-        '500':
+        "500":
           description: Erreur lors de l'ajout de l'opération de maintenance
 
+  /commandes/{id_commande}/status:
+    get:
+      tags:
+        - commandes
+      summary: Récupérer le statut d'une commande par ID
+      parameters:
+        - name: id_commande
+          in: path
+          description: ID de la commande
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Statut de la commande récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  id_stocks:
+                    type: integer
+
+  /stocks/{id}/info:
+    get:
+      tags:
+        - stocks
+      summary: Récupérer des informations sur un stock par ID
+      parameters:
+        - name: id
+          in: path
+          description: ID du stock
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Informations sur le stock récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lieu_de_stockage:
+                    type: string
+                  type:
+                    type: string
+
+  /historique/{id_stocks}/info:
+    get:
+      tags:
+        - historique
+      summary: Récupérer des informations sur un historique par ID de stocks
+      parameters:
+        - name: id_stocks
+          in: path
+          description: ID des stocks
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Informations sur l'historique récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id_equipement:
+                    type: integer
+                  id_user:
+                    type: integer
+
+  /maintenance/{id}/status:
+    get:
+      tags:
+        - maintenance
+      summary: Récupérer le statut d'une maintenance par ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de la maintenance
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Statut de la maintenance récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
 components:
   schemas:
     userInput:
@@ -648,7 +728,7 @@ components:
         - quantite
         - lieu_de_stockage
         - type
-        
+
     CommandeInput:
       type: object
       properties:
@@ -666,7 +746,7 @@ components:
         - date
         - status
         - id_stocks
-        
+
     HistoriqueUtilisationInput:
       type: object
       properties:
@@ -687,7 +767,7 @@ components:
         - date_utilisation
         - description_utilisation
         - id_stocks
-        
+
     MaintenanceInput:
       type: object
       properties:
@@ -708,7 +788,7 @@ components:
         - description_maintenance
         - cout_maintenance
         - status
-      
+
     EquipementOutput:
       type: object
       properties:
