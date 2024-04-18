@@ -620,11 +620,95 @@ components:
           type: string
         annee_de_fabrication:
           type: integer
+        type:
+          type: string
+        status_equipement:
+          type: string
       required:
         - nom
         - description
         - pays_d_origine
         - annee_de_fabrication
+        - type
+        - status_equipement
+
+    StockInput:
+      type: object
+      properties:
+        id_equipement:
+          type: integer
+        quantite:
+          type: integer
+        lieu_de_stockage:
+          type: string
+        type:
+          type: string
+      required:
+        - id_equipement
+        - quantite
+        - lieu_de_stockage
+        - type
+        
+    CommandeInput:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        date:
+          type: string
+          format: date
+        status:
+          type: string
+        id_stocks:
+          type: integer
+      required:
+        - user_id
+        - date
+        - status
+        - id_stocks
+        
+    HistoriqueUtilisationInput:
+      type: object
+      properties:
+        id_equipement:
+          type: integer
+        id_user:
+          type: integer
+        date_utilisation:
+          type: string
+          format: date-time
+        description_utilisation:
+          type: string
+        id_stocks:
+          type: integer
+      required:
+        - id_equipement
+        - id_user
+        - date_utilisation
+        - description_utilisation
+        - id_stocks
+        
+    MaintenanceInput:
+      type: object
+      properties:
+        id_equipement:
+          type: integer
+        date_maintenance:
+          type: string
+          format: date
+        description_maintenance:
+          type: string
+        cout_maintenance:
+          type: number
+        status:
+          type: string
+      required:
+        - id_equipement
+        - date_maintenance
+        - description_maintenance
+        - cout_maintenance
+        - status
+      
     EquipementOutput:
       type: object
       properties:
@@ -638,46 +722,19 @@ components:
           type: string
         annee_de_fabrication:
           type: integer
+        type:
+          type: string
+        status_equipement:
+          type: string
       required:
         - id
         - nom
         - description
         - pays_d_origine
         - annee_de_fabrication
-    StockInput:
-      type: object
-      properties:
-        id_equipement:
-          type: integer
-        quantite:
-          type: integer
-      required:
-        - id_equipement
-        - quantite
-    StockOutput:
-      type: object
-      properties:
-        id:
-          type: integer
-        id_equipement:
-          type: integer
-        quantite:
-          type: integer
-      required:
-        - id
-        - id_equipement
-        - quantite
-    CommandeInput:
-      type: object
-      properties:
-        user_id:
-          type: integer
-        date:
-          type: string
-          format: date
-      required:
-        - user_id
-        - date
+        - type
+        - status_equipement
+
     CommandeOutput:
       type: object
       properties:
@@ -688,60 +745,37 @@ components:
         date:
           type: string
           format: date
-##        lignes_commande:
-##          type: array
-##          items:
-##            $ref: '#/components/schemas/LigneCommandeOutput'
+        status:
+          type: string
+        id_stocks:
+          type: integer
       required:
         - id
         - user_id
         - date
-##    LigneCommandeInput:
-##      type: object
-##      properties:
-##        commande_id:
-##          type: integer
-##        equipement_id:
-##          type: integer
-##        quantite:
-##          type: integer
-##      required:
-##        - commande_id
-##        - equipement_id
-##        - quantite
-##   LigneCommandeOutput:
-##      type: object
-##      properties:
-##        id:
-##          type: integer
-##        commande_id:
-##          type: integer
-##        equipement_id:
-##          type: integer
-##        quantite:
-##          type: integer
-##      required:
-##        - id
-##        - commande_id
-##        - equipement_id
-##        - quantite
-    HistoriqueUtilisationInput:
+        - status
+        - id_stocks
+
+    StockOutput:
       type: object
       properties:
+        id:
+          type: integer
         id_equipement:
           type: integer
-        id_user:
+        quantite:
           type: integer
-        date_utilisation:
+        lieu_de_stockage:
           type: string
-          format: date-time
-        description_utilisation:
+        type:
           type: string
       required:
+        - id
         - id_equipement
-        - id_user
-        - date_utilisation
-        - description_utilisation
+        - quantite
+        - lieu_de_stockage
+        - type
+
     HistoriqueUtilisationOutput:
       type: object
       properties:
@@ -756,29 +790,16 @@ components:
           format: date-time
         description_utilisation:
           type: string
+        id_stocks:
+          type: integer
       required:
         - id
         - id_equipement
         - id_user
         - date_utilisation
         - description_utilisation
-    MaintenanceInput:
-      type: object
-      properties:
-        id_equipement:
-          type: integer
-        date_maintenance:
-          type: string
-          format: date
-        description_maintenance:
-          type: string
-        cout_maintenance:
-          type: number
-      required:
-        - id_equipement
-        - date_maintenance
-        - description_maintenance
-        - cout_maintenance
+        - id_stocks
+
     MaintenanceOutput:
       type: object
       properties:
@@ -793,9 +814,12 @@ components:
           type: string
         cout_maintenance:
           type: number
+        status:
+          type: string
       required:
         - id
         - id_equipement
         - date_maintenance
         - description_maintenance
         - cout_maintenance
+        - status
