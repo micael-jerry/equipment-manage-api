@@ -235,30 +235,31 @@ paths:
           description: Equipement non trouvé
         "500":
           description: Erreur lors de la suppression de l'équipement
-  /equipements/{id}/type:
-    get:
-      tags:
-        - equipements
-      summary: Récupérer le type d'un équipement par ID
-      parameters:
-        - name: id
-          in: path
-          description: ID de l'équipement
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Type de l'équipement récupéré avec succès
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  type:
-                    type: string
-                  status_equipement:
-                    type: string
+/equipements/{id}/type:
+  get:
+    tags:
+      - equipements
+    summary: Récupérer le type d'un équipement par ID
+    parameters:
+      - name: id
+        in: path
+        description: ID de l'équipement
+        required: true
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: Type de l'équipement récupéré avec succès
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                status_equipement:
+                  type: string
+
   /stocks:
     get:
       tags:
@@ -654,6 +655,85 @@ paths:
                     type: string
 components:
   schemas:
+    EquipementInput:
+      type: object
+      properties:
+        nom:
+          type: string
+        description:
+          type: string
+        pays_d_origine:
+          type: string
+        annee_de_fabrication:
+          type: integer
+        type:
+          type: string
+          enum:
+            - Véhicules terrestres
+            - Armement
+            - Matériel de communication
+            - Équipement médical
+            - Équipement de protection
+            - Équipement logistique
+            - Matériel de génie
+            - Équipement de surveillance et de reconnaissance
+            - Équipement de soutien
+            - Équipement informatique et électronique
+        status_equipement:
+          type: string
+          enum:
+            - en cours de maintenance
+            - actif
+            - inactif
+      required:
+        - nom
+        - description
+        - pays_d_origine
+        - annee_de_fabrication
+        - type
+        - status_equipement
+
+    EquipementOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+        nom:
+          type: string
+        description:
+          type: string
+        pays_d_origine:
+          type: string
+        annee_de_fabrication:
+          type: integer
+        type:
+          type: string
+          enum:
+            - Véhicules terrestres
+            - Armement
+            - Matériel de communication
+            - Équipement médical
+            - Équipement de protection
+            - Équipement logistique
+            - Matériel de génie
+            - Équipement de surveillance et de reconnaissance
+            - Équipement de soutien
+            - Équipement informatique et électronique
+        status_equipement:
+          type: string
+          enum:
+            - en cours de maintenance
+            - actif
+            - inactif
+      required:
+        - id
+        - nom
+        - description
+        - pays_d_origine
+        - annee_de_fabrication
+        - type
+        - status_equipement
+
     userInput:
       type: object
       properties:
@@ -689,28 +769,6 @@ components:
         - prenom
         - grade
         - unite
-    EquipementInput:
-      type: object
-      properties:
-        nom:
-          type: string
-        description:
-          type: string
-        pays_d_origine:
-          type: string
-        annee_de_fabrication:
-          type: integer
-        type:
-          type: string
-        status_equipement:
-          type: string
-      required:
-        - nom
-        - description
-        - pays_d_origine
-        - annee_de_fabrication
-        - type
-        - status_equipement
 
     StockInput:
       type: object
@@ -723,6 +781,13 @@ components:
           type: string
         type:
           type: string
+          enum:
+            - Entrepôt
+            - Hangar
+            - Magasin
+            - Dépôt
+            - Coffre-fort
+            - Zone de stockage temporaire
       required:
         - id_equipement
         - quantite
@@ -739,6 +804,17 @@ components:
           format: date
         status:
           type: string
+          enum:
+            - En attente de confirmation
+            - Confirmée
+            - En cours de traitement
+            - En attente de livraison
+            - Expédiée
+            - Livrée
+            - En attente de paiement
+            - En cours de paiement
+            - Paiement reçu
+            - Annulée
         id_stocks:
           type: integer
       required:
@@ -782,38 +858,23 @@ components:
           type: number
         status:
           type: string
+          enum:
+            - En attente de maintenance
+            - En cours de maintenance
+            - Maintenance planifiée
+            - Maintenance terminée
+            - En attente de pièces de rechange
+            - En attente d'approbation de la maintenance
+            - En attente de disponibilité de l'équipement
+            - En attente de réparation
+            - En attente de diagnostic
+            - Maintenance reportée
       required:
         - id_equipement
         - date_maintenance
         - description_maintenance
         - cout_maintenance
         - status
-
-    EquipementOutput:
-      type: object
-      properties:
-        id:
-          type: integer
-        nom:
-          type: string
-        description:
-          type: string
-        pays_d_origine:
-          type: string
-        annee_de_fabrication:
-          type: integer
-        type:
-          type: string
-        status_equipement:
-          type: string
-      required:
-        - id
-        - nom
-        - description
-        - pays_d_origine
-        - annee_de_fabrication
-        - type
-        - status_equipement
 
     CommandeOutput:
       type: object
@@ -827,6 +888,17 @@ components:
           format: date
         status:
           type: string
+          enum:
+            - En attente de confirmation
+            - Confirmée
+            - En cours de traitement
+            - En attente de livraison
+            - Expédiée
+            - Livrée
+            - En attente de paiement
+            - En cours de paiement
+            - Paiement reçu
+            - Annulée
         id_stocks:
           type: integer
       required:
@@ -849,6 +921,13 @@ components:
           type: string
         type:
           type: string
+          enum:
+            - Entrepôt
+            - Hangar
+            - Magasin
+            - Dépôt
+            - Coffre-fort
+            - Zone de stockage temporaire
       required:
         - id
         - id_equipement
@@ -896,6 +975,17 @@ components:
           type: number
         status:
           type: string
+          enum:
+            - En attente de maintenance
+            - En cours de maintenance
+            - Maintenance planifiée
+            - Maintenance terminée
+            - En attente de pièces de rechange
+            - En attente d'approbation de la maintenance
+            - En attente de disponibilité de l'équipement
+            - En attente de réparation
+            - En attente de diagnostic
+            - Maintenance reportée
       required:
         - id
         - id_equipement
