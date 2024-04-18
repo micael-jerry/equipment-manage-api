@@ -26,6 +26,9 @@ exports.getStockById = async (req, res) => {
 // Ajouter un nouvel élément au stock
 exports.createStock = async (req, res) => {
   const stock = new Stock({
+    //TODO: si id_equipement n'existe pas dans la base de donnee, affiche une erreur et n'ajoute pas un nouvel element au stock
+    //si quantite = 0 ou negatif, affiche une erreur et n'ajoute pas un nouvel element au stock
+    //ces parametres sont obligatoires
     id_equipement: req.body.id_equipement,
     quantite: req.body.quantite
   });
@@ -64,7 +67,7 @@ exports.deleteStock = async (req, res) => {
       return res.status(404).json({ message: 'Élément du stock non trouvé' });
     }
 
-    await stock.remove();
+    await stock.deleteOne({ _id: req.params.id});
     res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });

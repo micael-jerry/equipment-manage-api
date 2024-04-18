@@ -26,6 +26,9 @@ exports.getMaintenanceById = async (req, res) => {
 // Ajouter une nouvelle opération de maintenance
 exports.createMaintenance = async (req, res) => {
   const maintenance = new Maintenance({
+    //TODO: si id_equipement n'existe pas dans la base de donnee, affiche une erreur et n'ajoute pas une nouvelle opération de maintenance
+    //si date n'est pas normal, affiche une erreur et n'ajoute pas une nouvelle opération de maintenance
+    //ces parametres sont obligatoires
     id_equipement: req.body.id_equipement,
     date_maintenance: req.body.date_maintenance,
     description_maintenance: req.body.description_maintenance,

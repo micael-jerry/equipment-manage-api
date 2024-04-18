@@ -68,7 +68,7 @@ exports.deleteEquipement = async (req, res) => {
       return res.status(404).json({ message: 'Équipement non trouvé' });
     }
 
-    await equipement.remove();
+    await equipement.deleteOne({ _id: req.params.id});
     res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });
