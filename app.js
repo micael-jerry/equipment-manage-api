@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const routes = require('./routes/index');
+const routes = require('./src/routes/index');
 require('dotenv').config();
 
 // Connexion à MongoDB Atlas
