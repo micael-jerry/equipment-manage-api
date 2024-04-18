@@ -1,19 +1,17 @@
-const Maintenance = require('../models/maintenance');
+const maintenanceService = require('../services/maintenanceService');
 
-// Récupérer la liste des opérations de maintenance
 exports.getMaintenances = async (req, res) => {
   try {
-    const maintenances = await Maintenance.find();
+    const maintenances = await maintenanceService.getMaintenances();
     res.status(200).json(maintenances);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Récupérer une opération de maintenance par ID
 exports.getMaintenanceById = async (req, res) => {
   try {
-    const maintenance = await Maintenance.findById(req.params.id);
+    const maintenance = await maintenanceService.getMaintenanceById(req.params.id);
     if (!maintenance) {
       return res.status(404).json({ message: 'Opération de maintenance non trouvée' });
     }
@@ -23,55 +21,31 @@ exports.getMaintenanceById = async (req, res) => {
   }
 };
 
-// Ajouter une nouvelle opération de maintenance
 exports.createMaintenance = async (req, res) => {
-  const maintenance = new Maintenance({
-    //TODO: si id_equipement n'existe pas dans la base de donnee, affiche une erreur et n'ajoute pas une nouvelle opération de maintenance
-    //si date n'est pas normal, affiche une erreur et n'ajoute pas une nouvelle opération de maintenance
-    //ces parametres sont obligatoires
-    id_equipement: req.body.id_equipement,
-    date_maintenance: req.body.date_maintenance,
-    description_maintenance: req.body.description_maintenance,
-    cout_maintenance: req.body.cout_maintenance
-  });
+  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance } = req.body;
 
   try {
-    const newMaintenance = await maintenance.save();
+    const newMaintenance = await maintenanceService.createMaintenance(id_equipement, date_maintenance, description_maintenance, cout_maintenance);
     res.status(201).json(newMaintenance);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// Mettre à jour une opération de maintenance
 exports.updateMaintenance = async (req, res) => {
+  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance } = req.body;
+
   try {
-    const maintenance = await Maintenance.findById(req.params.id);
-    if (!maintenance) {
-      return res.status(404).json({ message: 'Opération de maintenance non trouvée' });
-    }
-
-    maintenance.id_equipement = req.body.id_equipement || maintenance.id_equipement;
-    maintenance.date_maintenance = req.body.date_maintenance || maintenance.date_maintenance;
-    maintenance.description_maintenance = req.body.description_maintenance || maintenance.description_maintenance;
-    maintenance.cout_maintenance = req.body.cout_maintenance || maintenance.cout_maintenance;
-
-    const updatedMaintenance = await maintenance.save();
+    const updatedMaintenance = await maintenanceService.updateMaintenance(req.params.id, id_equipement, date_maintenance, description_maintenance, cout_maintenance);
     res.status(200).json(updatedMaintenance);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// Supprimer une opération de maintenance
 exports.deleteMaintenance = async (req, res) => {
   try {
-    const maintenance = await Maintenance.findById(req.params.id);
-    if (!maintenance) {
-      return res.status(404).json({ message: 'Opération de maintenance non trouvée' });
-    }
-
-    await maintenance.remove();
+    await maintenanceService.deleteMaintenance(req.params.id);
     res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });

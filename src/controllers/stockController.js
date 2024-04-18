@@ -1,19 +1,17 @@
-const Stock = require('../models/stock');
+const stockService = require('../services/stockService');
 
-// Récupérer la liste des stocks
 exports.getStocks = async (req, res) => {
   try {
-    const stocks = await Stock.find();
+    const stocks = await stockService.getStocks();
     res.status(200).json(stocks);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Récupérer un élément du stock par ID
 exports.getStockById = async (req, res) => {
   try {
-    const stock = await Stock.findById(req.params.id);
+    const stock = await stockService.getStockById(req.params.id);
     if (!stock) {
       return res.status(404).json({ message: 'Élément du stock non trouvé' });
     }
@@ -23,51 +21,31 @@ exports.getStockById = async (req, res) => {
   }
 };
 
-// Ajouter un nouvel élément au stock
 exports.createStock = async (req, res) => {
-  const stock = new Stock({
-    //TODO: si id_equipement n'existe pas dans la base de donnee, affiche une erreur et n'ajoute pas un nouvel element au stock
-    //si quantite = 0 ou negatif, affiche une erreur et n'ajoute pas un nouvel element au stock
-    //ces parametres sont obligatoires
-    id_equipement: req.body.id_equipement,
-    quantite: req.body.quantite
-  });
+  const { id_equipement, quantite } = req.body;
 
   try {
-    const newStock = await stock.save();
+    const newStock = await stockService.createStock(id_equipement, quantite);
     res.status(201).json(newStock);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// Mettre à jour un élément du stock
 exports.updateStock = async (req, res) => {
+  const { id_equipement, quantite } = req.body;
+
   try {
-    const stock = await Stock.findById(req.params.id);
-    if (!stock) {
-      return res.status(404).json({ message: 'Élément du stock non trouvé' });
-    }
-
-    stock.id_equipement = req.body.id_equipement || stock.id_equipement;
-    stock.quantite = req.body.quantite || stock.quantite;
-
-    const updatedStock = await stock.save();
+    const updatedStock = await stockService.updateStock(req.params.id, id_equipement, quantite);
     res.status(200).json(updatedStock);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-// Supprimer un élément du stock
 exports.deleteStock = async (req, res) => {
   try {
-    const stock = await Stock.findById(req.params.id);
-    if (!stock) {
-      return res.status(404).json({ message: 'Élément du stock non trouvé' });
-    }
-
-    await stock.deleteOne({ _id: req.params.id});
+    await stockService.deleteStock(req.params.id);
     res.status(204).json();
   } catch (error) {
     res.status(500).json({ message: error.message });
