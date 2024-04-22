@@ -34,10 +34,26 @@ const deleteStock = async (id) => {
   await stock.deleteOne({ _id: id });
 };
 
+const getStockInfoById = async (id) => {
+  const stock = await Stock.findById(id);
+  if (!stock) {
+    throw new Error('Élément du stock non trouvé');
+  }
+
+  return {
+    id: stock._id,
+    id_equipement: stock.id_equipement,
+    quantite: stock.quantite,
+    lieu_de_stockage: stock.lieu_de_stockage,
+    type: stock.type,
+  };
+};
+
 module.exports = {
   getStocks,
   getStockById,
   createStock,
   updateStock,
   deleteStock,
+  getStockInfoById,
 };

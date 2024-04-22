@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const stockSchema = new mongoose.Schema({
   id_equipement: { type: Number, required: true },
   quantite: { type: Number, required: true },
-  lieu_de_stockage: {
+  type: {
     type: String,
     enum: [
       "Entrepôt",
@@ -15,7 +15,7 @@ const stockSchema = new mongoose.Schema({
     ],
     required: true,
   },
-  type: { type: String, required: true },
+  lieu_de_stockage: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Stock", stockSchema);

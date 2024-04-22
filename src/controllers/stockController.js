@@ -51,3 +51,12 @@ exports.deleteStock = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getStockInfoById = async (req, res) => {
+  try {
+    const stockInfo = await stockService.getStockInfoById(req.params.id);
+    res.status(200).json(stockInfo);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
