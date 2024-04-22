@@ -1,10 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const stockSchema = new mongoose.Schema({
-  id_equipement: Number,
-  quantite: Number,
-  lieu_de_stockage: String,
-  type: String
+  id_equipement: { type: Number, required: true },
+  quantite: { type: Number, required: true },
+  lieu_de_stockage: {
+    type: String,
+    enum: [
+      "Entrepôt",
+      "Hangar",
+      "Magasin",
+      "Dépôt",
+      "Coffre-fort",
+      "Zone de stockage temporaire",
+    ],
+    required: true,
+  },
+  type: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Stock', stockSchema);
+module.exports = mongoose.model("Stock", stockSchema);

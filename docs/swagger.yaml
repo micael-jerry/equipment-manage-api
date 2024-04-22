@@ -235,30 +235,31 @@ paths:
           description: Equipement non trouvé
         "500":
           description: Erreur lors de la suppression de l'équipement
-/equipements/{id}/type:
-  get:
-    tags:
-      - equipements
-    summary: Récupérer le type d'un équipement par ID
-    parameters:
-      - name: id
-        in: path
-        description: ID de l'équipement
-        required: true
-        schema:
-          type: integer
-    responses:
-      "200":
-        description: Type de l'équipement récupéré avec succès
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                type:
-                  type: string
-                status_equipement:
-                  type: string
+
+  /equipements/{id}/type:
+    get:
+      tags:
+        - equipements
+      summary: Récupérer le type d'un équipement par ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de l'équipement
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Type de l'équipement récupéré avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  status_equipement:
+                    type: string
 
   /stocks:
     get:
