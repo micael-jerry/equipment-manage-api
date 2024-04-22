@@ -8,6 +8,16 @@ const getUserById = async (id) => {
   return await User.findById(id);
 };
 
+const getUserByGrade = async (grade) => {
+  return await User.find({ grade });
+};
+
+const checkInvalidGrades = async (grades) => {
+  const validGrades = ['Officier', 'Sous-Officier', 'Caporal', 'Soldat'];
+  const invalidGrades = grades.filter(grade => !validGrades.includes(grade));
+  return invalidGrades.length > 0 ? invalidGrades : null;
+};
+
 const createUser = async (nom, prenom, grade, unite) => {
   const user = new User({ nom, prenom, grade, unite });
   return await user.save();
@@ -42,4 +52,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-};0
+  getUserByGrade,
+  checkInvalidGrades,
+};

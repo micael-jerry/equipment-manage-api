@@ -35,5 +35,5 @@ const getHistoriqueInfoByStocksId = async (id_stocks) => {
 module.exports = {
   getHistoriqueUtilisation,
   createHistoriqueUtilisation,
-  getHistoriqueInfoByStocksId, // Ajout de la nouvelle méthode
+  getHistoriqueInfoByStocksId,
 };

@@ -51,3 +51,29 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getUsersByGrade = async (req, res) => {
+  const { grade } = req.params;
+
+  try {
+    const users = await userService.getUserByGrade(grade);
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.checkInvalidGrades = async (req, res) => {
+  const { grades } = req.body;
+
+  try {
+    const invalidGrades = await userService.checkInvalidGrades(grades);
+    if (invalidGrades) {
+      res.status(400).json({ message: `Les grades suivants sont invalides : ${invalidGrades.join(', ')}` });
+    } else {
+      res.status(200).json({ message: 'Tous les grades sont valides.' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -654,6 +654,7 @@ paths:
                 properties:
                   status:
                     type: string
+                    
 components:
   schemas:
     EquipementInput:
@@ -744,6 +745,11 @@ components:
           type: string
         grade:
           type: string
+          enum:
+            - Officier
+            - Sous-Officier
+            - Caporal
+            - Soldat
         unite:
           type: string
       required:
@@ -751,6 +757,7 @@ components:
         - prenom
         - grade
         - unite
+
     userOutput:
       type: object
       properties:
@@ -889,17 +896,6 @@ components:
           format: date
         status:
           type: string
-          enum:
-            - En attente de confirmation
-            - Confirmée
-            - En cours de traitement
-            - En attente de livraison
-            - Expédiée
-            - Livrée
-            - En attente de paiement
-            - En cours de paiement
-            - Paiement reçu
-            - Annulée
         id_stocks:
           type: integer
       required:
@@ -922,13 +918,6 @@ components:
           type: string
         type:
           type: string
-          enum:
-            - Entrepôt
-            - Hangar
-            - Magasin
-            - Dépôt
-            - Coffre-fort
-            - Zone de stockage temporaire
       required:
         - id
         - id_equipement
@@ -976,17 +965,6 @@ components:
           type: number
         status:
           type: string
-          enum:
-            - En attente de maintenance
-            - En cours de maintenance
-            - Maintenance planifiée
-            - Maintenance terminée
-            - En attente de pièces de rechange
-            - En attente d'approbation de la maintenance
-            - En attente de disponibilité de l'équipement
-            - En attente de réparation
-            - En attente de diagnostic
-            - Maintenance reportée
       required:
         - id
         - id_equipement

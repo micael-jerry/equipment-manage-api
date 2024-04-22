@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const historiqueController = require('../controllers/historiqueController');
+const historiqueController = require("../controllers/historiqueController");
 
-router.get('/', historiqueController.getHistoriqueUtilisation);
-router.post('/', historiqueController.createHistoriqueUtilisation);
-router.get('/:id_stocks/info', historiqueController.getHistoriqueInfoByStocksId); // Ajout de la nouvelle route
+router.get("/", historiqueController.getHistoriqueUtilisation);
+router.post("/", historiqueController.createHistoriqueUtilisation);
+router.get("/:id_stocks/info",historiqueController.getHistoriqueInfoByStocksId
+);
 
 module.exports = router;
