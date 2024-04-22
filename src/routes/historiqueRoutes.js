@@ -4,5 +4,6 @@ const historiqueController = require('../controllers/historiqueController');
 
 router.get('/', historiqueController.getHistoriqueUtilisation);
 router.post('/', historiqueController.createHistoriqueUtilisation);
+router.get('/:id_stocks/info', historiqueController.getHistoriqueInfoByStocksId); // Ajout de la nouvelle route
 
 module.exports = router;
