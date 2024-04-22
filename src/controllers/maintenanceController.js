@@ -22,10 +22,10 @@ exports.getMaintenanceById = async (req, res) => {
 };
 
 exports.createMaintenance = async (req, res) => {
-  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance } = req.body;
+  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance, status } = req.body;
 
   try {
-    const newMaintenance = await maintenanceService.createMaintenance(id_equipement, date_maintenance, description_maintenance, cout_maintenance);
+    const newMaintenance = await maintenanceService.createMaintenance(id_equipement, date_maintenance, description_maintenance, cout_maintenance, status);
     res.status(201).json(newMaintenance);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -33,10 +33,10 @@ exports.createMaintenance = async (req, res) => {
 };
 
 exports.updateMaintenance = async (req, res) => {
-  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance } = req.body;
+  const { id_equipement, date_maintenance, description_maintenance, cout_maintenance, status } = req.body;
 
   try {
-    const updatedMaintenance = await maintenanceService.updateMaintenance(req.params.id, id_equipement, date_maintenance, description_maintenance, cout_maintenance);
+    const updatedMaintenance = await maintenanceService.updateMaintenance(req.params.id, id_equipement, date_maintenance, description_maintenance, cout_maintenance, status);
     res.status(200).json(updatedMaintenance);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -47,6 +47,15 @@ exports.deleteMaintenance = async (req, res) => {
   try {
     await maintenanceService.deleteMaintenance(req.params.id);
     res.status(204).json();
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getMaintenanceStatusById = async (req, res) => {
+  try {
+    const maintenanceStatus = await maintenanceService.getMaintenanceStatusById(req.params.id);
+    res.status(200).json(maintenanceStatus);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
