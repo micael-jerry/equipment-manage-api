@@ -7,5 +7,6 @@ router.get('/:id', equipementController.getEquipementById);
 router.post('/', equipementController.createEquipement);
 router.put('/:id', equipementController.updateEquipement);
 router.delete('/:id', equipementController.deleteEquipement);
+router.get('/:id/type', equipementController.getEquipementTypeById);
 
 module.exports = router;
