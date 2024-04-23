@@ -1,4 +1,3 @@
-// commandeController.js
 const CommandeService = require('../services/commandeService');
 const HistoriqueService = require('../services/historiqueService');
 

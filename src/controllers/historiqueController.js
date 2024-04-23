@@ -1,4 +1,3 @@
-// historiqueController.js
 const HistoriqueService = require('../services/historiqueService');
 
 const historiqueController = {
