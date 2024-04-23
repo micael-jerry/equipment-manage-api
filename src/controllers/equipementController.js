@@ -1,95 +1,49 @@
-const Equipement = require('../models/equipement');
+// equipementController.js
+const express = require('express');
+const router = express.Router();
+const EquipementService = require('../services/equipementService');
+const HistoriqueService = require('../services/historiqueService');
 
-const getEquipements = async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const equipements = await Equipement.find();
+    const equipements = await EquipementService.getEquipements();
     res.json(equipements);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+});
 
-const getEquipementById = async (req, res) => {
+router.post('/', async (req, res) => {
+  const { nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement } = req.body;
   try {
-    const equipement = await Equipement.findById(req.params.id);
-    res.json(equipement);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const createEquipement = async (req, res) => {
-  const equipement = new Equipement({
-    nom: req.body.nom,
-    description: req.body.description,
-    pays_d_origine: req.body.pays_d_origine,
-    annee_de_fabrication: req.body.annee_de_fabrication,
-    type: req.body.type,
-    status_equipement: req.body.status_equipement
-  });
-
-  try {
-    const newEquipement = await equipement.save();
+    const newEquipement = await EquipementService.createEquipement(nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement);
+    await HistoriqueService.createAddEqHistory(newEquipement._id, null, null);
     res.status(201).json(newEquipement);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-};
+});
 
-const updateEquipement = async (req, res) => {
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement } = req.body;
   try {
-    const equipement = await Equipement.findById(req.params.id);
-
-    if (!equipement) {
-      return res.status(404).json({ message: 'Équipement non trouvé' });
-    }
-
-    equipement.nom = req.body.nom || equipement.nom;
-    equipement.description = req.body.description || equipement.description;
-    equipement.pays_d_origine = req.body.pays_d_origine || equipement.pays_d_origine;
-    equipement.annee_de_fabrication = req.body.annee_de_fabrication || equipement.annee_de_fabrication;
-    equipement.type = req.body.type || equipement.type;
-    equipement.status_equipement = req.body.status_equipement || equipement.status_equipement;
-
-    const updatedEquipement = await equipement.save();
+    const updatedEquipement = await EquipementService.updateEquipement(id, nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement);
+    await HistoriqueService.createAddEqHistory(updatedEquipement._id, null, null);
     res.json(updatedEquipement);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-};
+});
 
-const deleteEquipement = async (req, res) => {
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    const equipement = await Equipement.findById(req.params.id);
-
-    if (!equipement) {
-      return res.status(404).json({ message: 'Équipement non trouvé' });
-    }
-
-    await equipement.deleteOne();
-    res.json({ message: 'Équipement supprimé' });
+    await EquipementService.deleteEquipement(id);
+    res.json({ message: 'Équipement supprimé avec succès' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
-};
+});
 
-const getEquipementTypeById = async (req, res) => {
-  try {
-    const equipement = await Equipement.findById(req.params.id);
-    if (!equipement) {
-      return res.status(404).json({ message: 'Équipement non trouvé' });
-    }
-    res.json({ type: equipement.type });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-module.exports = {
-  getEquipements,
-  getEquipementById,
-  createEquipement,
-  updateEquipement,
-  deleteEquipement,
-  getEquipementTypeById
-};
+module.exports = router;

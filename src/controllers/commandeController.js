@@ -1,82 +1,48 @@
-const commandeService = require("../services/commandeService");
+// commandeController.js
+const CommandeService = require('../services/commandeService');
+const HistoriqueService = require('../services/historiqueService');
 
-exports.getCommandes = async (req, res) => {
-  try {
-    const commandes = await commandeService.getCommandes();
-    res.status(200).json(commandes);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.getCommandeById = async (req, res) => {
-  try {
-    const commande = await commandeService.getCommandeById(req.params.id);
-    if (!commande) {
-      return res.status(404).json({ message: "Commande non trouvée" });
+const commandeController = {
+  getAllCommandes: async (req, res) => {
+    try {
+      const commandes = await CommandeService.getCommandes();
+      res.json(commandes);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-    res.status(200).json(commande);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  },
 
-exports.createCommande = async (req, res) => {
-  const { user_id, date, status, id_stocks } = req.body;
-
-  try {
-    const newCommande = await commandeService.createCommande(
-      user_id,
-      date,
-      status,
-      id_stocks
-    );
-    res.status(201).json(newCommande);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-exports.updateCommande = async (req, res) => {
-  const { user_id, date, status, id_stocks } = req.body;
-
-  try {
-    const updatedCommande = await commandeService.updateCommande(
-      req.params.id,
-      user_id,
-      date,
-      status,
-      id_stocks
-    );
-    res.status(200).json(updatedCommande);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-exports.deleteCommande = async (req, res) => {
-  try {
-    await commandeService.deleteCommande(req.params.id);
-    res.status(204).json();
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.updateCommandeStatus = async (req, res) => {
-  const { status } = req.body;
-
-  try {
-    const commande = await Commande.findById(req.params.id);
-    if (!commande) {
-      return res.status(404).json({ message: 'Commande non trouvée' });
+  createCommande: async (req, res) => {
+    const { user_id, date } = req.body;
+    try {
+      const newCommande = await CommandeService.createCommande(user_id, date);
+      await HistoriqueService.createCommandeHistory(newCommande._id, user_id);
+      res.status(201).json(newCommande);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
     }
+  },
 
-    commande.status = status || commande.status;
-    await commande.save();
+  updateCommande: async (req, res) => {
+    const { id } = req.params;
+    const { user_id, date, status } = req.body;
+    try {
+      const updatedCommande = await CommandeService.updateCommande(id, user_id, date, status);
+      res.json(updatedCommande);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
 
-    res.status(200).json(commande);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  deleteCommande: async (req, res) => {
+    const { id } = req.params;
+    try {
+      await CommandeService.deleteCommande(id);
+      res.json({ message: 'Commande supprimée avec succès' });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   }
 };
+
+module.exports = commandeController;
