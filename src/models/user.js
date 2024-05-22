@@ -9,7 +9,14 @@ const userSchema = new mongoose.Schema({
     enum: Object.values(UserTypeEnum),
     required: true,
   },
-  unite: String,
+  unite: {
+    type: Number,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

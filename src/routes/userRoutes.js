@@ -4,10 +4,13 @@ const userController = require("../controllers/userController");
 
 router.get("/", userController.getUsers);
 router.get("/:id", userController.getUserById);
-router.post("/", userController.createUser);
+router.get("/grade/:grade", userController.getUsersByGrade);
 router.put("/:id", userController.updateUser);
 router.delete("/:id", userController.deleteUser);
-router.get("/grade/:grade", userController.getUsersByGrade);
-router.post("/checkGrades", userController.checkInvalidGrades);
+router.post("/login", userController.login);
+router.post("/logout", userController.logout);
+router.post("/signup", userController.signup);
+router.post("/reset-password", userController.resetPassword);
+router.post("/verifier-utilisateur", userController.verifierUtilisateur);
 
 module.exports = router;

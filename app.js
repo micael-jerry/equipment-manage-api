@@ -18,8 +18,8 @@ db.once('open', () => {
 
 // Configuration de l'application Express
 const app = express();
+app.use(setHeaderCors());
 app.use(bodyParser.json());
-app.use(cors());
 app.use('/api', routes);
 
 // Gestion des routes non trouvées
