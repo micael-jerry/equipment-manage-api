@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routes = require('./src/routes/index');
+const { setHeaderCors } = require('./src/middleware/cors.middleware');
 require('dotenv').config();
 
 // Connexion à MongoDB Atlas
@@ -18,7 +19,7 @@ db.once('open', () => {
 
 // Configuration de l'application Express
 const app = express();
-app.use(setHeaderCors());
+app.use(setHeaderCors);
 app.use(bodyParser.json());
 app.use('/api', routes);
 

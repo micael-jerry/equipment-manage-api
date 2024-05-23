@@ -15,7 +15,6 @@ const createEquipement = async (nom, description, pays_d_origine, annee_de_fabri
 
   // Create history for the created equipement
   await HistoriqueService.createAddEqHistory(savedEquipement._id, null, null);
-
   return savedEquipement;
 };
 

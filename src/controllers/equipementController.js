@@ -1,29 +1,33 @@
-const express = require('express');
-const router = express.Router();
 const EquipementService = require('../services/equipementService');
 const HistoriqueService = require('../services/historiqueService');
+const commandeController = require('./commandeController');
 
-router.get('/', async (req, res) => {
+exports.getEquipements = async (req, res) => {
   try {
     const equipements = await EquipementService.getEquipements();
     res.json(equipements);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-});
+};
 
-router.post('/', async (req, res) => {
-  const { nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement } = req.body;
+exports.createEquipement = async (req, res) => {
+  const { nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement, user_id, date } = req.body;
   try {
-    const newEquipement = await EquipementService.createEquipement(nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement);
-    await HistoriqueService.createAddEqHistory(newEquipement._id, null, null);
-    res.status(201).json(newEquipement);
+    // Créez d'abord la commande pour cet équipement
+    const newCommande = await commandeController.createCommande(req, res);
+    // Ensuite, créez l'équipement si la commande a été créée avec succès
+    if (newCommande) {
+      const newEquipement = await EquipementService.createEquipement(nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement);
+      await HistoriqueService.createAddEqHistory(newEquipement._id, null, null);
+      res.status(201).json(newEquipement);
+    }
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
+};
 
-router.put('/:id', async (req, res) => {
+exports.updateEquipement = async (req, res) => {
   const { id } = req.params;
   const { nom, description, pays_d_origine, annee_de_fabrication, type, status_equipement } = req.body;
   try {
@@ -33,9 +37,9 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
+};
 
-router.delete('/:id', async (req, res) => {
+exports.deleteEquipement = async (req, res) => {
   const { id } = req.params;
   try {
     await EquipementService.deleteEquipement(id);
@@ -43,6 +47,4 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
-});
-
-module.exports = router;
+};
