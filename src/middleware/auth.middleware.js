@@ -10,7 +10,8 @@ exports.verifyAuth = (req, res, next) => {
 				});
 			} else {
 				req.user = {
-					userId: decodedToken.userId,
+					_id: decodedToken._id,
+					role: decodedToken.role,
 				};
 				next();
 			}

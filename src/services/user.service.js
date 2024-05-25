@@ -4,10 +4,10 @@ const User = require('../models/user');
 const UserTypeEnum = require('../models/user.type');
 
 exports.createUser = async objUser => {
-	const { nom, prenom, grade, unite, pseudo, password } = objUser;
+	const { nom, prenom, grade, unite, pseudo, password, role } = objUser;
 	if (!Object.values(UserTypeEnum).includes(grade))
 		return Promise.reject({ message: 'Grade Invalide' });
-	const user = new User({ nom, prenom, grade, unite, pseudo, password });
+	const user = new User({ nom, prenom, grade, unite, pseudo, password, role });
 	return await user.save();
 };
 
@@ -21,8 +21,7 @@ exports.loginUser = async objLog => {
 		return Promise.reject({ message: 'Mot de passe invalide' });
 	}
 	return {
-		user: user,
-		token: jwt.sign({ userId: user._id }, process.env.SECRET_KEY_JWT),
+		token: jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY_JWT),
 	};
 };
 
@@ -39,7 +38,7 @@ exports.getUserByName = async nom => {
 };
 
 exports.updateUser = async (id, newUserInfo) => {
-	const { nom, prenom, grade, unite } = newUserInfo;
+	const { nom, prenom, grade, unite, role } = newUserInfo;
 	const user = await User.findById(id);
 	if (!user) {
 		return Promise.reject({ message: 'utilisateur non trouvee' });
@@ -48,6 +47,7 @@ exports.updateUser = async (id, newUserInfo) => {
 	user.prenom = prenom || user.prenom;
 	user.grade = grade || user.grade;
 	user.unite = unite || user.unite;
+	user.role = role || user.role;
 	return await user.save();
 };
 

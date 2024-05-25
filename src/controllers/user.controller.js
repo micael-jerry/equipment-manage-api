@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
 	userService
-		.getUserById(req.user.userId)
+		.getUserById(req.user._id)
 		.then(r => res.status(200).json(r))
 		.catch(err => res.status(500).json(err));
 };

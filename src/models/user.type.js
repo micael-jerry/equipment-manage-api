@@ -1,3 +1,8 @@
+const UserRoleEnum = {
+	ADMIN: 'ADMIN',
+  USER: 'USER',
+}
+
 const UserGradeEnum = {
 	OFFICIER: 'OFFICIER',
 	SOUS_OFFICIER: 'SOUS_OFFICIER',
@@ -5,4 +10,5 @@ const UserGradeEnum = {
 	SOLDAT: 'SOLDAT',
 };
 
-module.exports = UserGradeEnum;
+module.exports.UserRoleEnum = UserRoleEnum
+module.exports.UserGradeEnum = UserGradeEnum;

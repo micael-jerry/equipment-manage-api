@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const UserGradeEnum = require('./user.type');
+const { UserGradeEnum, UserRoleEnum } = require('./user.type');
 
 const userSchema = new mongoose.Schema({
 	nom: String,
@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	role: {
+		type: String,
+		enum: Object.values(UserRoleEnum),
+		required: true,
+	}
 });
 
 userSchema.pre('save', async function () {
