@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const equipementTypeSchema = new mongoose.Schema({
-  nom: {
-    type: String,
-    required: true,
-  },
+	nom: {
+		type: String,
+		required: true,
+	},
 });
 
-module.exports = mongoose.model("EquipementType", equipementTypeSchema);
+module.exports = mongoose.model('EquipementType', equipementTypeSchema);

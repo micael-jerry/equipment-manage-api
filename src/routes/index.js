@@ -12,7 +12,7 @@ const equipementTypeRoutes = require('./equipementTypeRoutes');
 
 // Routes par défaut
 router.get('/', (req, res) => {
-    res.send('Bienvenue sur l\'API');
+	res.send("Bienvenue sur l'API");
 });
 
 // Utilisez les autres fichiers de route

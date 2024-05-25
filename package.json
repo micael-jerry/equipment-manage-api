@@ -1,25 +1,30 @@
 {
-  "name": "back-end-express",
-  "version": "1.0.0",
-  "description": "tuto-mangodb",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "author": "Lakara2",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.2.4"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  }
+	"name": "back-end-express",
+	"version": "1.0.0",
+	"description": "tuto-mangodb",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js",
+		"dev": "nodemon app.js",
+		"prettier": "prettier --write 'src/**/*.js'",
+		"eslint": "eslint src/**/*"
+	},
+	"author": "Lakara2",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"body-parser": "^1.20.2",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.5",
+		"express": "^4.19.2",
+		"jsonwebtoken": "^9.0.2",
+		"mongodb": "^6.5.0",
+		"mongoose": "^8.2.4"
+	},
+	"devDependencies": {
+		"eslint": "^9.3.0",
+		"nodemon": "^3.1.0",
+		"prettier": "^3.2.5"
+	}
 }
