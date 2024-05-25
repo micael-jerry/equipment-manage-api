@@ -4,8 +4,6 @@ const router = express.Router();
 // Importez les autres fichiers de route
 const userRoutes = require('./user.routes');
 const equipementRoutes = require('./equipementRoutes');
-const stockRoutes = require('./stockRoutes');
-const historiqueRoutes = require('./historiqueRoutes');
 const maintenanceRoutes = require('./maintenanceRoutes');
 
 // Routes par défaut
@@ -16,8 +14,6 @@ router.get('/', (req, res) => {
 // Utilisez les autres fichiers de route
 router.use('/users', userRoutes);
 router.use('/equipements', equipementRoutes);
-router.use('/stocks', stockRoutes);
-router.use('/historique-utilisation', historiqueRoutes);
 router.use('/maintenance', maintenanceRoutes);
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const Equipement = require('../models/equipement');
-const HistoriqueService = require('./historiqueService');
 
 const getEquipements = async () => {
 	return await Equipement.find();
@@ -27,8 +26,6 @@ const createEquipement = async (
 	});
 	const savedEquipement = await equipement.save();
 
-	// Create history for the created equipement
-	await HistoriqueService.createAddEqHistory(savedEquipement._id, null, null);
 	return savedEquipement;
 };
 
@@ -57,9 +54,6 @@ const updateEquipement = async (
 
 	const updatedEquipement = await equipement.save();
 
-	// Create history for the updated equipement
-	await HistoriqueService.createAddEqHistory(updatedEquipement._id, null, null);
-
 	return updatedEquipement;
 };
 
@@ -68,17 +62,7 @@ const deleteEquipement = async id => {
 	if (!equipement) {
 		throw new Error('Équipement non trouvé');
 	}
-
 	await equipement.deleteOne({ _id: id });
-
-	// Create history for the deleted equipement
-	await HistoriqueService.createDeleteHistory(
-		equipement._id,
-		null,
-		new Date(),
-		'Équipement supprimé',
-		null,
-	);
 };
 
 module.exports = {

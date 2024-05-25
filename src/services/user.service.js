@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const UserTypeEnum = require('../models/userType');
+const UserTypeEnum = require('../models/user.type');
 
 exports.createUser = async objUser => {
 	const { nom, prenom, grade, unite, pseudo, password } = objUser;

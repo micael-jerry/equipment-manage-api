@@ -1,5 +1,4 @@
 const EquipementService = require('../services/equipementService');
-const HistoriqueService = require('../services/historiqueService');
 
 exports.getEquipements = async (req, res) => {
 	try {
@@ -28,7 +27,6 @@ exports.createEquipement = async (req, res) => {
 				type,
 				status_equipement,
 			);
-			await HistoriqueService.createAddEqHistory(newEquipement._id, null, null);
 			res.status(201).json(newEquipement);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -54,11 +52,6 @@ exports.updateEquipement = async (req, res) => {
 			annee_de_fabrication,
 			type,
 			status_equipement,
-		);
-		await HistoriqueService.createAddEqHistory(
-			updatedEquipement._id,
-			null,
-			null,
 		);
 		res.json(updatedEquipement);
 	} catch (err) {

@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const UserTypeEnum = require('./userType');
+const UserTypeEnum = require('./user.type');
 
 const userSchema = new mongoose.Schema({
 	nom: String,
