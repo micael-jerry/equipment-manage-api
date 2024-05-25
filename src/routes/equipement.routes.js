@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const equipementController = require('../controllers/equipementController');
+const equipementController = require('../controllers/equipement.controller');
 
 router.get('/', equipementController.getEquipements);
 router.post('/', equipementController.createEquipement);

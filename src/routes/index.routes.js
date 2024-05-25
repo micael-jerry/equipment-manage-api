@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Importez les autres fichiers de route
 const userRoutes = require('./user.routes');
-const equipementRoutes = require('./equipementRoutes');
+const equipementRoutes = require('./equipement.routes');
 const maintenanceRoutes = require('./maintenanceRoutes');
 
 // Routes par défaut
