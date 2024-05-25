@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const UserTypeEnum = require('../models/userType');
 
@@ -7,6 +9,21 @@ const createUser = async objUser => {
 		return Promise.reject({ message: 'Grade Invalide' });
 	const user = new User({ nom, prenom, grade, unite, pseudo, password });
 	return await user.save();
+};
+
+const loginUser = async objLog => {
+	const { pseudo, password } = objLog;
+	const user = await User.findOne({ pseudo });
+	if (!user) {
+		return Promise.reject({ message: 'Utilisateur non trouve' });
+	}
+	if (!bcrypt.compareSync(password, user.password)) {
+		return Promise.reject({ message: 'Mot de passe invalide' });
+	}
+	return {
+		user: user,
+		token: jwt.sign({ userId: user._id }, process.env.SECRET_KEY_JWT),
+	};
 };
 
 const getUsers = async () => {
@@ -44,14 +61,10 @@ const deleteUser = async id => {
 	await user.deleteOne({ _id: id });
 };
 
-async function compare(a, b) {
-	if (a === b) return true;
-	else return false;
-}
 module.exports = {
 	createUser,
+	loginUser,
 	getUsers,
-	compare,
 	getUserById,
 	updateUser,
 	deleteUser,

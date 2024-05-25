@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const userService = require('../services/user.service');
 
 exports.signup = async (req, res) => {
@@ -9,30 +8,10 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-	const { nom, password } = req.body;
-	try {
-		const user = await userService.getUserByName(nom);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ message: "Nom d'utilisateur ou mot de passe incorrect." });
-		}
-		const isPasswordValid = await userService.compare(password, user.password);
-		if (!isPasswordValid) {
-			return res
-				.status(401)
-				.json({ message: "Nom d'utilisateur ou mot de passe incorrect." });
-		}
-		const token = jwt.sign({ userId: user._id }, 'your_secret_key', {
-			expiresIn: '1h',
-		});
-		res.cookie('session', token, { httpOnly: true, maxAge: 3600000 });
-		res
-			.status(200)
-			.json({ message: `Authentification réussie`, token: `${token}`, user });
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+	userService
+		.loginUser(req.body)
+		.then(r => res.status(200).json(r))
+		.catch(err => res.status(500).json(err));
 };
 
 exports.logout = async (req, res) => {

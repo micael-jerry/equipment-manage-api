@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const UserTypeEnum = require('./userType');
 
@@ -25,6 +26,11 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+});
+
+userSchema.pre('save', async function () {
+	const salt = bcrypt.genSaltSync();
+	this.password = bcrypt.hashSync(this.password, salt);
 });
 
 module.exports = mongoose.model('User', userSchema);
