@@ -1,6 +1,4 @@
 const jwt = require('jsonwebtoken');
-const user = require('../models/user');
-
 exports.verifyAuth = (req, res, next) => {
 	const bearerToken = req.headers.authorization;
 	try {
@@ -11,17 +9,10 @@ exports.verifyAuth = (req, res, next) => {
 					message: 'Unauthorized',
 				});
 			} else {
-				await user
-					.findById(decodedToken.userId)
-					.then(r => {
-						req.user = r;
-						next();
-					})
-					.catch(() => {
-						res.status(401).json({
-							message: 'Unauthorized',
-						});
-					});
+				req.user = {
+					userId: decodedToken.userId,
+				};
+				next();
 			}
 		});
 	} catch (error) {
