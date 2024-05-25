@@ -1,5 +1,13 @@
-const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const UserTypeEnum = require('../models/userType');
+
+const createUser = async objUser => {
+	const { nom, prenom, grade, unite, pseudo, password } = objUser;
+	if (!Object.values(UserTypeEnum).includes(grade))
+		return Promise.reject({ message: 'Grade Invalide' });
+	const user = new User({ nom, prenom, grade, unite, pseudo, password });
+	return await user.save();
+};
 
 const getUsers = async () => {
 	return await User.find();
@@ -11,11 +19,6 @@ const getUserById = async id => {
 
 const getUserByName = async nom => {
 	return await User.findOne({ nom });
-};
-
-const createUser = async (nom, prenom, grade, unite, password) => {
-	const user = new User({ nom, prenom, grade, unite, password });
-	return await user.save();
 };
 
 const updateUser = async (id, nom, prenom, grade, unite) => {
@@ -41,42 +44,16 @@ const deleteUser = async id => {
 	await user.deleteOne({ _id: id });
 };
 
-exports.createUser = async (nom, prenom, grade, unite, password) => {
-	try {
-		const user = new User({ nom, prenom, grade, unite, password });
-		return await user.save();
-	} catch (error) {
-		throw new Error('Impossible de créer un nouvel utilisateur.');
-	}
-};
-
-async function verifierUtilisateur(nom, prenom, grade, password) {
-	try {
-		const utilisateurTrouve = await User.findOne({
-			nom,
-			prenom,
-			grade,
-			password,
-		});
-		return !!utilisateurTrouve;
-	} catch (error) {
-		throw new Error(
-			"Erreur lors de la vérification de l'utilisateur : " + error.message,
-		);
-	}
-}
-
 async function compare(a, b) {
 	if (a === b) return true;
 	else return false;
 }
 module.exports = {
+	createUser,
 	getUsers,
 	compare,
 	getUserById,
-	createUser,
 	updateUser,
 	deleteUser,
 	getUserByName,
-	verifierUtilisateur,
 };

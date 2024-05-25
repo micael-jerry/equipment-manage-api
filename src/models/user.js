@@ -13,6 +13,14 @@ const userSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
+	pseudo: {
+		type: String,
+		required: true,
+		minLength: 3,
+		maxLength: 50,
+		unique: true,
+		trim: true,
+	},
 	password: {
 		type: String,
 		required: true,
