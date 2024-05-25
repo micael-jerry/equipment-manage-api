@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const UserTypeEnum = require('./user.type');
+const UserGradeEnum = require('./user.type');
 
 const userSchema = new mongoose.Schema({
 	nom: String,
 	prenom: String,
 	grade: {
 		type: String,
-		enum: Object.values(UserTypeEnum),
+		enum: Object.values(UserGradeEnum),
 		required: true,
 	},
 	unite: {

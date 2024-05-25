@@ -1,8 +1,8 @@
-const UserTypeEnum = {
-	OFFICIER: 'Officier',
-	SOUS_OFFICIER: 'Sous-Officier',
-	CAPORAL: 'Caporal',
-	SOLDAT: 'Soldat',
+const UserGradeEnum = {
+	OFFICIER: 'OFFICIER',
+	SOUS_OFFICIER: 'SOUS_OFFICIER',
+	CAPORAL: 'CAPORAL',
+	SOLDAT: 'SOLDAT',
 };
 
-module.exports = UserTypeEnum;
+module.exports = UserGradeEnum;
