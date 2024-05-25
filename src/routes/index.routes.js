@@ -4,7 +4,6 @@ const router = express.Router();
 // Importez les autres fichiers de route
 const userRoutes = require('./user.routes');
 const equipementRoutes = require('./equipement.routes');
-const maintenanceRoutes = require('./maintenanceRoutes');
 
 // Routes par défaut
 router.get('/', (req, res) => {
@@ -14,6 +13,5 @@ router.get('/', (req, res) => {
 // Utilisez les autres fichiers de route
 router.use('/users', userRoutes);
 router.use('/equipements', equipementRoutes);
-router.use('/maintenance', maintenanceRoutes);
 
 module.exports = router;
