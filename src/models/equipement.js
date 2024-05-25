@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const { EquipementTypeEnum, EquipementStatusEnum } = require('./equipement.type');
+const {
+	EquipementTypeEnum,
+	EquipementStatusEnum,
+} = require('./equipement.type');
 
 const equipementSchema = new mongoose.Schema({
 	nom: { type: String, required: true },

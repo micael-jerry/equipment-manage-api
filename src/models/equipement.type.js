@@ -9,13 +9,13 @@ const EquipementTypeEnum = {
 	SURVEILLANCE_RECONNAISSANCE: 'SURVEILLANCE_RECONNAISSANCE',
 	SOUTIEN: 'SOUTIEN',
 	INFORMATIQUE_ELECTRONIQUE: 'INFORMATIQUE_ELECTRONIQUE',
-}
+};
 
 const EquipementStatusEnum = {
 	MAINTENANCE: 'MAINTENANCE',
 	ACTIF: 'ACTIF',
 	INACTIF: 'INACTIF',
-}
+};
 
 module.exports.EquipementTypeEnum = EquipementTypeEnum;
 module.exports.EquipementStatusEnum = EquipementStatusEnum;
