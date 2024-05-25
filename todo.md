@@ -1,5 +1,13 @@
 # TODO
 
+## Auth
+
+- Authentication, verifier le role
+
+## Equipement
+
+- Filtre pour rechercher dans les equipements
+
 ## Historique d'utilisation
 
 - Cree un modele historique
