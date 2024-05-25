@@ -17,6 +17,7 @@ Ce projet est une application web développée avec Node.js et Express. Elle uti
    ```plaintext
    PORT=8080
    MONGODB_URI=mongodb://localhost:27017/material
+   SECRET_KEY_JWT=hehe
 
 4. Lancez l'application en mode développement :
    ```bash
