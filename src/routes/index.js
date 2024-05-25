@@ -5,7 +5,6 @@ const router = express.Router();
 const userRoutes = require('./user.routes');
 const equipementRoutes = require('./equipementRoutes');
 const stockRoutes = require('./stockRoutes');
-const commandeRoutes = require('./commande.routes');
 const historiqueRoutes = require('./historiqueRoutes');
 const maintenanceRoutes = require('./maintenanceRoutes');
 
@@ -18,7 +17,6 @@ router.get('/', (req, res) => {
 router.use('/users', userRoutes);
 router.use('/equipements', equipementRoutes);
 router.use('/stocks', stockRoutes);
-router.use('/commandes', commandeRoutes);
 router.use('/historique-utilisation', historiqueRoutes);
 router.use('/maintenance', maintenanceRoutes);
 
