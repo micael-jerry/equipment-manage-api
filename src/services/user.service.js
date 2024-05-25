@@ -38,24 +38,23 @@ exports.getUserByName = async nom => {
 	return await User.findOne({ nom });
 };
 
-exports.updateUser = async (id, nom, prenom, grade, unite) => {
+exports.updateUser = async (id, newUserInfo) => {
+	const { nom, prenom, grade, unite } = newUserInfo;
 	const user = await User.findById(id);
 	if (!user) {
-		throw new Error('Utilisateur non trouvé');
+		return Promise.reject({ message: 'utilisateur non trouvee' });
 	}
-
 	user.nom = nom || user.nom;
 	user.prenom = prenom || user.prenom;
 	user.grade = grade || user.grade;
 	user.unite = unite || user.unite;
-
 	return await user.save();
 };
 
 exports.deleteUser = async id => {
 	const user = await User.findById(id);
 	if (!user) {
-		throw new Error('Utilisateur non trouvé');
+		return Promise.reject({ message: 'utilisateur non trouvee' });
 	}
 
 	await user.deleteOne({ _id: id });

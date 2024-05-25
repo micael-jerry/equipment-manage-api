@@ -11,16 +11,17 @@ exports.verifyAuth = (req, res, next) => {
 					message: 'Unauthorized',
 				});
 			} else {
-				await user.findById(decodedToken.userId)
-					.then((r) => {
+				await user
+					.findById(decodedToken.userId)
+					.then(r => {
 						req.user = r;
 						next();
 					})
 					.catch(() => {
-            res.status(401).json({
-              message: 'Unauthorized',
-            });
-          });
+						res.status(401).json({
+							message: 'Unauthorized',
+						});
+					});
 			}
 		});
 	} catch (error) {
