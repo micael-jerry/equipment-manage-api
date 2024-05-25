@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { getUserByIdAndRole } = require('../services/user.service');
 exports.verifyAuth = (req, res, next) => {
 	const bearerToken = req.headers.authorization;
 	try {
@@ -9,11 +10,16 @@ exports.verifyAuth = (req, res, next) => {
 					message: 'Unauthorized',
 				});
 			} else {
-				req.user = {
-					_id: decodedToken._id,
-					role: decodedToken.role,
-				};
-				next();
+				await getUserByIdAndRole(decodedToken._id, decodedToken.role)
+					.then((u) => {
+						req.user = u
+						next();
+					})
+					.catch(() => {
+						res.status(401).json({
+							message: 'Unauthorized',
+						});
+					});
 			}
 		});
 	} catch (error) {

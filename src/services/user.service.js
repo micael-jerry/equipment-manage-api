@@ -37,6 +37,10 @@ exports.getUserByName = async nom => {
 	return await User.findOne({ nom });
 };
 
+exports.getUserByIdAndRole = async (id, role) => {
+	return await User.findOne({ _id: id, role });
+}
+
 exports.updateUser = async (id, newUserInfo) => {
 	const { nom, prenom, grade, unite, role } = newUserInfo;
 	const user = await User.findById(id);
