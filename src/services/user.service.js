@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const UserTypeEnum = require('../models/userType');
 
-const createUser = async objUser => {
+exports.createUser = async objUser => {
 	const { nom, prenom, grade, unite, pseudo, password } = objUser;
 	if (!Object.values(UserTypeEnum).includes(grade))
 		return Promise.reject({ message: 'Grade Invalide' });
@@ -11,7 +11,7 @@ const createUser = async objUser => {
 	return await user.save();
 };
 
-const loginUser = async objLog => {
+exports.loginUser = async objLog => {
 	const { pseudo, password } = objLog;
 	const user = await User.findOne({ pseudo });
 	if (!user) {
@@ -26,19 +26,19 @@ const loginUser = async objLog => {
 	};
 };
 
-const getUsers = async () => {
+exports.getUsers = async () => {
 	return await User.find();
 };
 
-const getUserById = async id => {
+exports.getUserById = async id => {
 	return await User.findById(id);
 };
 
-const getUserByName = async nom => {
+exports.getUserByName = async nom => {
 	return await User.findOne({ nom });
 };
 
-const updateUser = async (id, nom, prenom, grade, unite) => {
+exports.updateUser = async (id, nom, prenom, grade, unite) => {
 	const user = await User.findById(id);
 	if (!user) {
 		throw new Error('Utilisateur non trouvé');
@@ -52,21 +52,11 @@ const updateUser = async (id, nom, prenom, grade, unite) => {
 	return await user.save();
 };
 
-const deleteUser = async id => {
+exports.deleteUser = async id => {
 	const user = await User.findById(id);
 	if (!user) {
 		throw new Error('Utilisateur non trouvé');
 	}
 
 	await user.deleteOne({ _id: id });
-};
-
-module.exports = {
-	createUser,
-	loginUser,
-	getUsers,
-	getUserById,
-	updateUser,
-	deleteUser,
-	getUserByName,
 };

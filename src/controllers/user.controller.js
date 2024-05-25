@@ -14,11 +14,6 @@ exports.login = async (req, res) => {
 		.catch(err => res.status(500).json(err));
 };
 
-exports.logout = async (req, res) => {
-	res.cookie('session', '', { expires: new Date(0) });
-	res.status(200).json({ message: 'Déconnexion réussie.' });
-};
-
 exports.getUsers = async (req, res) => {
 	try {
 		const users = await userService.getUsers();
@@ -72,26 +67,6 @@ exports.getUsersByGrade = async (req, res) => {
 	try {
 		const users = await userService.getUserByGrade(grade);
 		res.status(200).json(users);
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
-};
-
-exports.resetPassword = async (req, res) => {
-	const { unite } = req.body;
-
-	try {
-		const user = await userService.getUserByUnite(unite);
-		if (!user) {
-			return res
-				.status(404)
-				.json({ message: 'Aucun utilisateur trouvé avec cette unité.' });
-		}
-
-		res.status(200).json({
-			message:
-				'Un nouveau mot de passe temporaire a été envoyé à votre adresse e-mail.',
-		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
