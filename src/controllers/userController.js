@@ -136,11 +136,9 @@ exports.checkInvalidGrades = async (req, res) => {
 	try {
 		const invalidGrades = await userService.checkInvalidGrades(grades);
 		if (invalidGrades) {
-			res
-				.status(400)
-				.json({
-					message: `Les grades suivants sont invalides : ${invalidGrades.join(', ')}`,
-				});
+			res.status(400).json({
+				message: `Les grades suivants sont invalides : ${invalidGrades.join(', ')}`,
+			});
 		} else {
 			res.status(200).json({ message: 'Tous les grades sont valides.' });
 		}
@@ -190,12 +188,10 @@ exports.resetPassword = async (req, res) => {
 				.json({ message: 'Aucun utilisateur trouvé avec cette unité.' });
 		}
 
-		res
-			.status(200)
-			.json({
-				message:
-					'Un nouveau mot de passe temporaire a été envoyé à votre adresse e-mail.',
-			});
+		res.status(200).json({
+			message:
+				'Un nouveau mot de passe temporaire a été envoyé à votre adresse e-mail.',
+		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
@@ -222,11 +218,9 @@ exports.verifierUtilisateur = async (req, res) => {
 		}
 	} catch (error) {
 		console.error("Erreur lors de la vérification de l'utilisateur:", error);
-		res
-			.status(500)
-			.json({
-				message:
-					"Une erreur s'est produite lors de la vérification de l'utilisateur.",
-			});
+		res.status(500).json({
+			message:
+				"Une erreur s'est produite lors de la vérification de l'utilisateur.",
+		});
 	}
 };

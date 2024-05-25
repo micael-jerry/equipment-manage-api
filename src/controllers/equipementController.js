@@ -19,8 +19,6 @@ exports.createEquipement = async (req, res) => {
 		annee_de_fabrication,
 		type,
 		status_equipement,
-		user_id,
-		date,
 	} = req.body;
 	try {
 		// Créez d'abord la commande pour cet équipement
