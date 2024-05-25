@@ -8,7 +8,6 @@ const stockRoutes = require('./stockRoutes');
 const commandeRoutes = require('./commande.routes');
 const historiqueRoutes = require('./historiqueRoutes');
 const maintenanceRoutes = require('./maintenanceRoutes');
-const equipementTypeRoutes = require('./equipementTypeRoutes');
 
 // Routes par défaut
 router.get('/', (req, res) => {
@@ -22,6 +21,5 @@ router.use('/stocks', stockRoutes);
 router.use('/commandes', commandeRoutes);
 router.use('/historique-utilisation', historiqueRoutes);
 router.use('/maintenance', maintenanceRoutes);
-router.use('/equipements', equipementTypeRoutes);
 
 module.exports = router;
