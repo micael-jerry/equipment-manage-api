@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const UserTypeEnum = require('../models/user.type');
+const {UserGradeEnum, UserRoleEnum} = require('../models/user.type');
 
 exports.createUser = async objUser => {
-	const { nom, prenom, grade, unite, pseudo, password, role } = objUser;
-	if (!Object.values(UserTypeEnum).includes(grade))
+	const { nom, prenom, grade, unite, pseudo, password } = objUser;
+	if (!Object.values(UserGradeEnum).includes(grade))
 		return Promise.reject({ message: 'Grade Invalide' });
-	const user = new User({ nom, prenom, grade, unite, pseudo, password, role });
+	const user = new User({ nom, prenom, grade, unite, pseudo, password, role: UserRoleEnum.USER });
 	return await user.save();
 };
 

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { getUserByIdAndRole } = require('../services/user.service');
+const { UserRoleEnum } = require('../models/user.type');
 exports.verifyAuth = (req, res, next) => {
 	const bearerToken = req.headers.authorization;
 	try {
@@ -28,3 +29,13 @@ exports.verifyAuth = (req, res, next) => {
 		});
 	}
 };
+
+exports.verifyAdminAccess = (req, res, next) => {
+	if (req.user.role === UserRoleEnum.ADMIN) {
+    next();
+  } else {
+    res.status(401).json({
+      message: 'Unauthorized',
+    });
+  }
+}
