@@ -1,9 +1,5 @@
 # TODO
 
-## Auth
-
-- Authentication, verifier le role
-
 ## Equipement
 
 - Filtre pour rechercher dans les equipements

@@ -14,6 +14,13 @@ exports.createEquipement = async (req, res) => {
 		.catch(err => res.status(500).json(err));
 };
 
+exports.getEquipementById = async (req, res) => {
+	equipementService
+    .getEquipementById(req.params.id)
+    .then(r => res.status(200).json(r))
+    .catch(err => res.status(500).json(err));
+}
+
 exports.updateEquipement = async (req, res) => {
 	equipementService
 		.updateEquipement(req.params.id, req.body)
