@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const {UserGradeEnum, UserRoleEnum} = require('../models/user.type');
+const { UserGradeEnum, UserRoleEnum } = require('../models/user.type');
 
 exports.createUser = async objUser => {
 	const { nom, prenom, grade, unite, pseudo, password } = objUser;
@@ -47,12 +47,7 @@ exports.updateUser = async (id, newUserInfo) => {
 	if (!user) {
 		return Promise.reject({ message: 'utilisateur non trouvee' });
 	}
-	user.nom = nom || user.nom;
-	user.prenom = prenom || user.prenom;
-	user.grade = grade || user.grade;
-	user.unite = unite || user.unite;
-	user.role = role || user.role;
-	return await user.save();
+	return await User.findOneAndUpdate({ _id: id }, { nom, prenom, grade, unite, role }, { new: true })
 };
 
 exports.deleteUser = async id => {
