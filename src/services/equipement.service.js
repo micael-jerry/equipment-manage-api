@@ -4,8 +4,16 @@ const {
 	EquipementStatusEnum,
 } = require('../models/equipement.type');
 
-exports.getEquipements = async () => {
-	return await Equipement.find();
+exports.getEquipements = async (criteria) => {
+	let { nom, type, status } = criteria;
+	let query = {};
+	if (nom)
+		query.nom = { $regex: new RegExp(nom, 'i') };
+	if (Object.values(EquipementTypeEnum).includes(type))
+		query.type = type;
+	if (Object.values(EquipementStatusEnum).includes(status))
+		query.status = status;
+	return await Equipement.find(query);
 };
 
 exports.getEquipementById = async id => {

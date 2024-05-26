@@ -2,7 +2,7 @@ const equipementService = require('../services/equipement.service');
 
 exports.getEquipements = async (req, res) => {
 	equipementService
-		.getEquipements()
+		.getEquipements(req.query)
 		.then(r => res.status(200).json(r))
 		.catch(err => res.status(500).json(err));
 };
