@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		enum: Object.values(UserRoleEnum),
 		required: true,
-	}
+	},
 });
 
 userSchema.pre('save', async function () {

@@ -7,7 +7,15 @@ exports.createUser = async objUser => {
 	const { nom, prenom, grade, unite, pseudo, password } = objUser;
 	if (!Object.values(UserGradeEnum).includes(grade))
 		return Promise.reject({ message: 'Grade Invalide' });
-	const user = new User({ nom, prenom, grade, unite, pseudo, password, role: UserRoleEnum.USER });
+	const user = new User({
+		nom,
+		prenom,
+		grade,
+		unite,
+		pseudo,
+		password,
+		role: UserRoleEnum.USER,
+	});
 	return await user.save();
 };
 
@@ -21,7 +29,10 @@ exports.loginUser = async objLog => {
 		return Promise.reject({ message: 'Mot de passe invalide' });
 	}
 	return {
-		token: jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY_JWT),
+		token: jwt.sign(
+			{ _id: user._id, role: user.role },
+			process.env.SECRET_KEY_JWT,
+		),
 	};
 };
 
@@ -39,7 +50,7 @@ exports.getUserByName = async nom => {
 
 exports.getUserByIdAndRole = async (id, role) => {
 	return await User.findOne({ _id: id, role });
-}
+};
 
 exports.updateUser = async (id, newUserInfo) => {
 	const { nom, prenom, grade, unite, role } = newUserInfo;
@@ -47,7 +58,11 @@ exports.updateUser = async (id, newUserInfo) => {
 	if (!user) {
 		return Promise.reject({ message: 'utilisateur non trouvee' });
 	}
-	return await User.findOneAndUpdate({ _id: id }, { nom, prenom, grade, unite, role }, { new: true })
+	return await User.findOneAndUpdate(
+		{ _id: id },
+		{ nom, prenom, grade, unite, role },
+		{ new: true },
+	);
 };
 
 exports.deleteUser = async id => {

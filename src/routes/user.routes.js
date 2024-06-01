@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
-const { verifyAuth, verifyAdminAccess } = require('../middleware/auth.middleware');
+const {
+	verifyAuth,
+	verifyAdminAccess,
+} = require('../middleware/auth.middleware');
 
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);

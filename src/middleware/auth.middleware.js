@@ -12,8 +12,8 @@ exports.verifyAuth = (req, res, next) => {
 				});
 			} else {
 				await getUserByIdAndRole(decodedToken._id, decodedToken.role)
-					.then((u) => {
-						req.user = u
+					.then(u => {
+						req.user = u;
 						next();
 					})
 					.catch(() => {
@@ -32,10 +32,10 @@ exports.verifyAuth = (req, res, next) => {
 
 exports.verifyAdminAccess = (req, res, next) => {
 	if (req.user.role === UserRoleEnum.ADMIN) {
-    next();
-  } else {
-    res.status(401).json({
-      message: 'Unauthorized',
-    });
-  }
-}
+		next();
+	} else {
+		res.status(401).json({
+			message: 'Unauthorized',
+		});
+	}
+};
