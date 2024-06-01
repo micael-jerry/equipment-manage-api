@@ -21,6 +21,11 @@ const equipementSchema = new mongoose.Schema(
 			enum: Object.values(EquipementStatusEnum),
 			required: true,
 		},
+		site: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Site',
+			required: true,
+		},
 	},
 	{
 		timestamps: true,

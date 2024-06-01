@@ -3,14 +3,18 @@ const {
 	EquipementTypeEnum,
 	EquipementStatusEnum,
 } = require('../models/equipement.type');
+const { getSiteById } = require('./site.service');
 
 exports.getEquipements = async criteria => {
-	let { nom, type, status } = criteria;
+	let { nom, type, status, site } = criteria;
 	let query = {};
 	if (nom) query.nom = { $regex: new RegExp(nom, 'i') };
 	if (Object.values(EquipementTypeEnum).includes(type)) query.type = type;
 	if (Object.values(EquipementStatusEnum).includes(status))
 		query.status = status;
+	await getSiteById(site).then(siteObj => {
+		query.site = siteObj._id;
+	});
 	return await Equipement.find(query);
 };
 
@@ -26,10 +30,17 @@ exports.createEquipement = async equipementObj => {
 		pays_d_origine,
 		annee_de_fabrication,
 		type,
+		site,
 	} = equipementObj;
 	if (!Object.values(EquipementTypeEnum).includes(type)) {
 		return Promise.reject({
 			message: "Type d'équipement invalide",
+		});
+	}
+	const siteObj = await getSiteById(site);
+	if (!siteObj) {
+		return Promise.reject({
+			message: 'Site non trouvé',
 		});
 	}
 	const equipement = new Equipement({
@@ -39,6 +50,7 @@ exports.createEquipement = async equipementObj => {
 		pays_d_origine,
 		annee_de_fabrication,
 		type,
+		site: siteObj._id,
 		status: EquipementStatusEnum.INACTIF,
 	});
 	return await equipement.save();
@@ -52,12 +64,19 @@ exports.updateEquipement = async (id, equipementUpdateObj) => {
 		pays_d_origine,
 		annee_de_fabrication,
 		type,
+		site,
 		status,
 	} = equipementUpdateObj;
 	const equipement = await Equipement.findById(id);
 	if (!equipement) {
 		return Promise.reject({
 			message: 'Équipement non trouvé',
+		});
+	}
+	const siteObj = await getSiteById(site);
+	if (!siteObj) {
+		return Promise.reject({
+			message: 'Site non trouvé',
 		});
 	}
 	if (type && !Object.values(EquipementTypeEnum).includes(type)) {
@@ -79,6 +98,7 @@ exports.updateEquipement = async (id, equipementUpdateObj) => {
 			pays_d_origine,
 			annee_de_fabrication,
 			type,
+			site: siteObj._id,
 			status,
 		},
 		{ new: true },
