@@ -81,7 +81,7 @@ exports.updateEquipement = async (id, equipementUpdateObj) => {
 			type,
 			status,
 		},
-		{ new: true }
+		{ new: true },
 	);
 };
 
