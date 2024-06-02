@@ -1,8 +1,12 @@
 const Equipement = require('../models/equipement');
 const {
+	EquipementHistoryTypeEnum,
+} = require('../models/equipement.history.type');
+const {
 	EquipementTypeEnum,
 	EquipementStatusEnum,
 } = require('../models/equipement.type');
+const { createEquipementHistory } = require('./equipement.history.service');
 const { getSiteById } = require('./site.service');
 
 exports.getEquipements = async criteria => {
@@ -17,14 +21,14 @@ exports.getEquipements = async criteria => {
 			query.site = siteObj._id;
 		});
 	}
-	return await Equipement.find(query).populate("site");
+	return await Equipement.find(query).populate('site');
 };
 
 exports.getEquipementById = async id => {
 	return await Equipement.findById(id);
 };
 
-exports.createEquipement = async equipementObj => {
+exports.createEquipement = async (userId, equipementObj) => {
 	const {
 		nom,
 		numero_de_serie,
@@ -55,10 +59,18 @@ exports.createEquipement = async equipementObj => {
 		site: siteObj._id,
 		status: EquipementStatusEnum.INACTIF,
 	});
-	return await equipement.save();
+	return await equipement.save().then(async created => {
+		await createEquipementHistory(
+			created._id,
+			userId,
+			EquipementHistoryTypeEnum.CREATION,
+			created.toObject(),
+		);
+		return created;
+	});
 };
 
-exports.updateEquipement = async (id, equipementUpdateObj) => {
+exports.updateEquipement = async (userId, id, equipementUpdateObj) => {
 	const {
 		nom,
 		numero_de_serie,
@@ -104,15 +116,32 @@ exports.updateEquipement = async (id, equipementUpdateObj) => {
 			status,
 		},
 		{ new: true },
-	);
+	).then(async updated => {
+		await createEquipementHistory(
+			updated._id,
+			userId,
+			EquipementHistoryTypeEnum.MODIFICATION,
+			equipement.toObject(),
+			updated.toObject(),
+		);
+		return updated;
+	});
 };
 
-exports.deleteEquipement = async id => {
+exports.deleteEquipement = async (userId, id) => {
 	const equipement = await Equipement.findById(id);
 	if (!equipement) {
 		return Promise.reject({
 			message: 'Équipement non trouvé',
 		});
 	}
-	await equipement.deleteOne({ _id: id });
+	await equipement.deleteOne({ _id: id }).then(async res => {
+		await createEquipementHistory(
+			equipement._id,
+			userId,
+			EquipementHistoryTypeEnum.SUPPRESSION,
+			equipement.toObject(),
+		);
+		return res;
+	});
 };

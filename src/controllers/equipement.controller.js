@@ -9,7 +9,7 @@ exports.getEquipements = async (req, res) => {
 
 exports.createEquipement = async (req, res) => {
 	equipementService
-		.createEquipement(req.body)
+		.createEquipement(req.user._id, req.body)
 		.then(r => res.status(201).json(r))
 		.catch(err => res.status(500).json(err));
 };
@@ -23,14 +23,14 @@ exports.getEquipementById = async (req, res) => {
 
 exports.updateEquipement = async (req, res) => {
 	equipementService
-		.updateEquipement(req.params.id, req.body)
+		.updateEquipement(req.user._id, req.params.id, req.body)
 		.then(r => res.status(201).json(r))
 		.catch(err => res.status(500).json(err));
 };
 
 exports.deleteEquipement = async (req, res) => {
 	equipementService
-		.deleteEquipement(req.params.id)
+		.deleteEquipement(req.user._id, req.params.id)
 		.then(() =>
 			res.status(201).json({
 				message: 'Équipement supprimé',
