@@ -71,7 +71,7 @@ exports.createEquipement = async (userId, equipementObj) => {
 };
 
 exports.updateEquipement = async (userId, id, equipementUpdateObj) => {
-	const {
+	let {
 		nom,
 		numero_de_serie,
 		description,
@@ -87,12 +87,6 @@ exports.updateEquipement = async (userId, id, equipementUpdateObj) => {
 			message: 'Équipement non trouvé',
 		});
 	}
-	const siteObj = await getSiteById(site);
-	if (!siteObj) {
-		return Promise.reject({
-			message: 'Site non trouvé',
-		});
-	}
 	if (type && !Object.values(EquipementTypeEnum).includes(type)) {
 		return Promise.reject({
 			message: "Type d'équipement invalide",
@@ -103,6 +97,17 @@ exports.updateEquipement = async (userId, id, equipementUpdateObj) => {
 			message: "Status d'équipement invalide",
 		});
 	}
+	if (site) {
+		const siteObj = await getSiteById(site);
+		if (!siteObj) {
+			return Promise.reject({
+				message: 'Site non trouvé',
+			});
+		}
+		else {
+			site = siteObj._id;
+		}
+	}
 	return await Equipement.findOneAndUpdate(
 		{ _id: id },
 		{
@@ -112,7 +117,7 @@ exports.updateEquipement = async (userId, id, equipementUpdateObj) => {
 			pays_d_origine,
 			annee_de_fabrication,
 			type,
-			site: siteObj._id,
+			site,
 			status,
 		},
 		{ new: true },
