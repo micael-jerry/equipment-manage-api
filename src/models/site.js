@@ -4,6 +4,7 @@ const siteSchema = mongoose.Schema({
 	adresse: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	ville: {
 		type: String,

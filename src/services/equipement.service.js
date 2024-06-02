@@ -12,9 +12,11 @@ exports.getEquipements = async criteria => {
 	if (Object.values(EquipementTypeEnum).includes(type)) query.type = type;
 	if (Object.values(EquipementStatusEnum).includes(status))
 		query.status = status;
-	await getSiteById(site).then(siteObj => {
-		query.site = siteObj._id;
-	});
+	if (site) {
+		await getSiteById(site).then(siteObj => {
+			query.site = siteObj._id;
+		});
+	}
 	return await Equipement.find(query);
 };
 
