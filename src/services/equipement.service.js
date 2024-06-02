@@ -17,7 +17,7 @@ exports.getEquipements = async criteria => {
 			query.site = siteObj._id;
 		});
 	}
-	return await Equipement.find(query);
+	return await Equipement.find(query).populate("site");
 };
 
 exports.getEquipementById = async id => {
